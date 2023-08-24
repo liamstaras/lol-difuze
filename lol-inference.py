@@ -14,12 +14,14 @@ from torch.utils.data import DataLoader
 parser = argparse.ArgumentParser(description='Run training')
 parser.add_argument('path', type=str, metavar='model path')
 parser.add_argument('--batch-size', type=int, default=4)
+parser.add_argument('--number-to-infer', type=int, default=100)
 
 args = parser.parse_args()
 
 ## IMPORTANT HYPERPARAMETERS ##
 PATH = args.path
 BATCH_SIZE = args.batch_size
+NUMBER_TO_INFER = args.number_to_infer
 
 # determine whether we will use the GPU
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -52,7 +54,7 @@ inference_dataset = difuze.data.NpyDataset(
     'data/full-log-clean.npy',
     gt_index=1,
     cond_index=0,
-    start_index=-10,
+    start_index=-NUMBER_TO_INFER,
     stop_index=0
 )
 
@@ -79,8 +81,7 @@ save_functions = [
 data_logger = difuze.log.DataLogger(
     use_tensorboard=False, # not required for inference
     visual_function=visual_function,
-    save_functions=save_functions,
-    base_directory_override='output'
+    save_functions=save_functions
 )
 
 # wrap everything up in the inference framework
