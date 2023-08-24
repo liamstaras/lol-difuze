@@ -129,8 +129,8 @@ data_logger = difuze.log.DataLogger(
     save_functions=save_functions
 )
 
-# wrap everything up in the diffusion framework
-framework = difuze.DiffusionFramework(
+# wrap everything up in the training framework
+framework = difuze.TrainingFramework(
     device=device,
     model=model,
     optimizer=optimizer,
