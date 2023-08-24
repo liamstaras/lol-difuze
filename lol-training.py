@@ -123,6 +123,7 @@ save_functions = [
     difuze.data.TifSaver(tensor_to_image_cmocean)
 ]
 
+# initialize the data logger
 data_logger = difuze.log.DataLogger(
     use_tensorboard=True,
     visual_function=visual_function,
@@ -130,7 +131,7 @@ data_logger = difuze.log.DataLogger(
 )
 
 # wrap everything up in the training framework
-framework = difuze.TrainingFramework(
+framework = difuze.training.TrainingFramework(
     device=device,
     model=model,
     optimizer=optimizer,
@@ -146,4 +147,5 @@ framework = difuze.TrainingFramework(
     metric_scheduler=metric_scheduler
 )
 
+# run training
 framework.main_training_loop()
