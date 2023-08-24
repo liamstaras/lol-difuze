@@ -1,1 +1,9 @@
+.env
+.vscode
+*__pycache__
+
 difuze
+difuze-requirements.txt
+
+runs
+data

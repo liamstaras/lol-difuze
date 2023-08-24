@@ -1,0 +1,2 @@
+powerbox==0.7.2
+cmocean==3.0.3
