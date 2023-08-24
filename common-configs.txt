@@ -1,0 +1,6 @@
+sbatch --gres=VramPerGpu:25GiB train.s --batch-size 32 --loss-function L1Loss
+sbatch --gres=VramPerGpu:25GiB train.s --batch-size 32 --loss-function MSELoss
+sbatch --gres=VramPerGpu:40GiB train.s --batch-size 50 --loss-function L1Loss
+sbatch --gres=VramPerGpu:40GiB train.s --batch-size 50 --loss-function MSELoss
+sbatch --gres=VramPerGpu:80GiB train.s --batch-size 100 --loss-function L1Loss
+sbatch --gres=VramPerGpu:80GiB train.s --batch-size 100 --loss-function MSELoss
