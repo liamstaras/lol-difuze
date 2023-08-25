@@ -31,10 +31,6 @@ LOSS_FUNCTION = args.loss_function
 # determine whether we will use the GPU
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# establish base path
-timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-base_path = os.path.join('runs', timestamp+'_'+gethostname())
-
 # create the model
 model = difuze.models.Palette(
     image_size=128,
