@@ -1,10 +1,7 @@
 import torch
 import numpy as np
-import os
 import cmocean
 import argparse
-from datetime import datetime
-from socket import gethostname
 
 import difuze
 
