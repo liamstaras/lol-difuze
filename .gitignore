@@ -7,5 +7,5 @@ difuze-requirements.txt
 
 runs
 data
-models
+models*
 output

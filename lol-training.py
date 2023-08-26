@@ -43,9 +43,9 @@ model = difuze.models.Palette(
 
 # create the loss function, optimizer and scheduler
 if LOSS_FUNCTION == 'L1Loss':
-    training_loss_function = torch.nn.L1Loss()
+    loss_function = torch.nn.L1Loss()
 elif LOSS_FUNCTION == 'MSELoss':
-    training_loss_function = torch.nn.MSELoss()
+    loss_function = torch.nn.MSELoss()
 
 optimizer = torch.optim.Adam(
     params=list(filter(lambda p: p.requires_grad, model.parameters())), 
@@ -84,12 +84,12 @@ evaulation_dataset = difuze.data.NpyDataset(
     stop_index=0.90
 )
 
-# prepare evaluation metrics
+# prepare validation metrics
 
 statistics = [
     PixelCounts(), PeakCounts(), PowerSpectrum()
 ]
-evaluation_metrics = [
+validation_metrics = [
     difuze.metrics.NumpyMetric(
         RelativeDifference(
             statistic
@@ -98,7 +98,7 @@ evaluation_metrics = [
 
 # make dataloaders
 training_dataloader = DataLoader(training_dataset, batch_size=BATCH_SIZE, shuffle=True)
-evaluation_dataloader = DataLoader(evaulation_dataset, batch_size=BATCH_SIZE, shuffle=False)
+validation_dataloader = DataLoader(evaulation_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
 # make function for generating images
 def tensor_to_image_cmocean(tensor):
@@ -131,10 +131,10 @@ framework = difuze.training.TrainingFramework(
     loss_scheduler=loss_scheduler,
     training_dataloader=training_dataloader,
     training_noise_schedule=training_noise_schedule,
-    training_loss_function=training_loss_function,
-    evaluation_dataloader=evaluation_dataloader,
+    loss_function=loss_function,
+    validation_dataloader=validation_dataloader,
     inference_noise_schedule=inference_noise_schedule,
-    evaluation_metrics=evaluation_metrics,
+    validation_metrics=validation_metrics,
     data_logger=data_logger,
 
     metric_scheduler=metric_scheduler

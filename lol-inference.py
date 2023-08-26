@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser(description='Run training')
 parser.add_argument('path', type=str, metavar='model path')
 parser.add_argument('--batch-size', type=int, default=4)
 parser.add_argument('--number-to-infer', type=int, default=100)
+parser.add_argument('--refinement-steps', type=int, default=300)
 
 args = parser.parse_args()
 
@@ -19,6 +20,7 @@ args = parser.parse_args()
 PATH = args.path
 BATCH_SIZE = args.batch_size
 NUMBER_TO_INFER = args.number_to_infer
+REFINEMENT_STEPS = args.refinement_steps
 
 # determine whether we will use the GPU
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -40,7 +42,7 @@ model = difuze.models.Palette(
 checkpoint_state_dict = torch.load(PATH)
 
 # make noise schedules
-inference_noise_schedule = difuze.support.NoiseSchedule(300, 1e-4, 0.09, np.linspace)
+inference_noise_schedule = difuze.support.NoiseSchedule(REFINEMENT_STEPS, 1e-4, 0.09, np.linspace)
 
 # make datasets
 inference_dataset = difuze.data.NpyDataset(
