@@ -9,3 +9,13 @@ sbatch --gres=VramPerGpu:80GiB train.s --batch-size 100 --loss-function MSELoss
 2 day, batch size 50:
 sbatch --gres=VramPerGpu:40GiB --time=48:00:00 train.s --batch-size 50 --loss-function L1Loss
 sbatch --gres=VramPerGpu:40GiB --time=48:00:00 train.s --batch-size 50 --loss-function MSELoss
+
+1 day, batch size 8, 16, 32
+sbatch --gres=VramPerGpu:6GiB --time=24:00:00 train.s --batch-size 8 --loss-function L1Loss
+sbatch --gres=VramPerGpu:6GiB --time=24:00:00 train.s --batch-size 8 --loss-function MSELoss
+sbatch --gres=VramPerGpu:12GiB --time=24:00:00 train.s --batch-size 16 --loss-function L1Loss
+sbatch --gres=VramPerGpu:12GiB --time=24:00:00 train.s --batch-size 16 --loss-function MSELoss
+sbatch --gres=VramPerGpu:24GiB --time=24:00:00 train.s --batch-size 32 --loss-function L1Loss
+sbatch --gres=VramPerGpu:24GiB --time=24:00:00 train.s --batch-size 32 --loss-function MSELoss
+sbatch --gres=VramPerGpu:3GiB --time=48:00:00 train.s --batch-size 4 --loss-function L1Loss
+sbatch --gres=VramPerGpu:3GiB --time=48:00:00 train.s --batch-size 4 --loss-function MSELoss

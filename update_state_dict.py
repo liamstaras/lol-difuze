@@ -3,10 +3,10 @@
 
 import torch
 
-IN_PATH = 'models/gpu027_Aug25_batch50_MAE_epoch73'
-OUT_PATH = IN_PATH
+IN_PATH = 'runs/2023-08-25_13-15-59_gpu025.baobab/models/model_21_BEST'
+OUT_PATH = 'models_to_test/gpu025_Aug25_batch32_MSE_epoch21'
 
-state_dict = torch.load(IN_PATH)
+state_dict = torch.load(IN_PATH, map_location=torch.device('cpu'))
 
 epoch_number = state_dict['epoch_number']
 model = (state_dict['model_state_dict'])
