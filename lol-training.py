@@ -66,7 +66,7 @@ metric_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
 
 # make noise schedules
 training_noise_schedule = difuze.support.NoiseSchedule(2000, 1e-6, 0.01, np.linspace)
-inference_noise_schedule = difuze.support.NoiseSchedule(300, 1e-4, 0.09, np.linspace)
+inference_noise_schedule = difuze.support.NoiseSchedule(1000, 1e-4, 0.09, np.linspace)
 
 # make datasets
 training_dataset = difuze.data.NpyDataset(
@@ -93,6 +93,9 @@ class CosmologyMetric(difuze.metrics.Metric):
             self.statistic(predicted_gt_image.cpu().numpy()),
             self.statistic(gt_image.cpu().numpy())
         ).rms()
+    @property
+    def name(self):
+        return self.statistic.name + ' -> difference_series -> RMS'
 
 validation_metrics = [
     CosmologyMetric(phystats.cosmology.PeakCounts()),
