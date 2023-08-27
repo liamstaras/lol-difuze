@@ -90,8 +90,8 @@ class CosmologyMetric(difuze.metrics.Metric):
         self.statistic = statistic
     def __call__(self, predicted_gt_image: torch.Tensor, gt_image: torch.Tensor):
         return phystats.support.difference_series(
-            self.statistic(predicted_gt_image.cpu().numpy()),
-            self.statistic(gt_image.cpu().numpy())
+            self.statistic(np.exp(predicted_gt_image.cpu().numpy())-1),
+            self.statistic(np.exp(gt_image.cpu().numpy())-1)
         ).rms()
     @property
     def name(self):
