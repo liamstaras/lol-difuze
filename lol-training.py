@@ -4,9 +4,8 @@ import cmocean
 import argparse
 
 import difuze
-
-from metrics.cosmology import PixelCounts, PeakCounts, PowerSpectrum
-from metrics.metrics import RelativeDifference
+import phystats
+import phystats.cosmology
 
 from torch.utils.data import DataLoader
 
@@ -86,15 +85,20 @@ evaulation_dataset = difuze.data.NpyDataset(
 
 # prepare validation metrics
 
-statistics = [
-    PixelCounts(), PeakCounts(), PowerSpectrum()
-]
+class CosmologyMetric(difuze.metrics.Metric):
+    def __init__(self, statistic):
+        self.statistic = statistic
+    def __call__(self, predicted_gt_image: torch.Tensor, gt_image: torch.Tensor):
+        return phystats.support.difference_series(
+            self.statistic(predicted_gt_image.cpu().numpy()),
+            self.statistic(gt_image.cpu().numpy())
+        ).rms()
+
 validation_metrics = [
-    difuze.metrics.NumpyMetric(
-        RelativeDifference(
-            statistic
-        )
-    ) for statistic in statistics]
+    CosmologyMetric(phystats.cosmology.PeakCounts()),
+    CosmologyMetric(phystats.cosmology.PixelCounts()),
+    CosmologyMetric(phystats.cosmology.PowerSpectrum())
+]
 
 # make dataloaders
 training_dataloader = DataLoader(training_dataset, batch_size=BATCH_SIZE, shuffle=True)
