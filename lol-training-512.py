@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 
 
 parser = argparse.ArgumentParser(description='Run training')
-parser.add_argument('--batch-size', type=int, default=6)
+parser.add_argument('--batch-size', type=int, default=3)
 parser.add_argument('--initial-learning-rate', type=float, default=1e-5)
 parser.add_argument('--gamma-decay', type=float, default=0.9)
 parser.add_argument('--loss-function', type=str, default='L1Loss')
