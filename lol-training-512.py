@@ -11,8 +11,8 @@ from torch.utils.data import DataLoader
 
 
 parser = argparse.ArgumentParser(description='Run training')
-parser.add_argument('--batch-size', type=int, default=4)
-parser.add_argument('--initial-learning-rate', type=float, default=1e-4)
+parser.add_argument('--batch-size', type=int, default=6)
+parser.add_argument('--initial-learning-rate', type=float, default=1e-5)
 parser.add_argument('--gamma-decay', type=float, default=0.9)
 parser.add_argument('--loss-function', type=str, default='L1Loss')
 
@@ -66,20 +66,20 @@ metric_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
 
 # make noise schedules
 training_noise_schedule = difuze.support.NoiseSchedule(2000, 1e-6, 0.01, np.linspace)
-inference_noise_schedule = difuze.support.NoiseSchedule(1000, 1e-4, 0.09, np.linspace)
+inference_noise_schedule = difuze.support.NoiseSchedule(300, 1e-4, 0.09, np.linspace)
 
 # make datasets
 training_dataset = difuze.data.NpyDataset(
     'data/full-log-clean-512.npy',
     gt_index=1,
     cond_index=0,
-    stop_index=0.899
+    stop_index=0.499
 )
 evaulation_dataset = difuze.data.NpyDataset(
     'data/full-log-clean-512.npy',
     gt_index=1,
     cond_index=0,
-    start_index=0.899,
+    start_index=0.8995,
     stop_index=0.90
 )
 
